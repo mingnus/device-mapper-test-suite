@@ -20,16 +20,16 @@ class EraRestoreTests < ThinpTestCase
 
   ERA7 = <<EOF
 <blocks>
-  <range begin="8192" end = "9216"/>
-  <range begin="10240" end = "11264"/>
-  <range begin="12288" end = "13312"/>
-  <range begin="14336" end = "15360"/>
+  <range begin="8192" end="9216"/>
+  <range begin="10240" end="11264"/>
+  <range begin="12288" end="13312"/>
+  <range begin="14336" end="15360"/>
 </blocks>
 EOF
 
   ERA13 = <<EOF
 <blocks>
-  <range begin="14336" end = "15360"/>
+  <range begin="14336" end="15360"/>
 </blocks>
 EOF
 
