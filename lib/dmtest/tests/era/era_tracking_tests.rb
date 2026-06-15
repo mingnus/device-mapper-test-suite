@@ -129,8 +129,10 @@ EOF
         end
       end
 
-      output1 = File.read(s.dump_metadata(:logical => true))
-      output2 = File.read(s.dump_metadata(:logical => true))
+      output1 = output2 = nil
+
+      s.dump_metadata(:logical => true) {|path| output1 = File.read(path)}
+      s.dump_metadata(:logical => true) {|path| output2 = File.read(path)}
 
       output2.should == output1
     end
@@ -153,11 +155,11 @@ EOF
           ProcessControl.run("dd if=/dev/zero of=#{s.era.path} oflag=direct bs=#{block_size * 512} seek=#{block} count=1")
 
           s.era.pause do
-            output1 = s.dump_metadata(:logical => true)
+            s.dump_metadata(:logical => true) {|path| output1 = File.read(path)}
           end
 
           s.era.pause do
-            output2 = s.dump_metadata(:logical => true)
+            s.dump_metadata(:logical => true) {|path| output2 = File.read(path)}
           end
 
           output2.should == output1
@@ -175,15 +177,15 @@ EOF
         wipe_device(s.era)
       end
 
-      output1 = s.dump_metadata(:logical => true)
+      s.dump_metadata(:logical => true) {|path| output1 = File.read(path)}
 
       s.activate_top_level do
         s.era.pause do
-          output2 = s.dump_metadata(:logical => true)
+          s.dump_metadata(:logical => true) {|path| output2 = File.read(path)}
         end
       end
 
-      output3 = s.dump_metadata(:logical => true)
+      s.dump_metadata(:logical => true) {|path| output3 = File.read(path)}
     end
 
     output2.should == output1
@@ -199,13 +201,13 @@ EOF
         wipe_device(s.era)
         
         s.era.pause do
-          output1 = s.dump_metadata(:logical => true)
+          s.dump_metadata(:logical => true) {|path| output1 = File.read(path)}
         end
 
         wipe_device(s.era)
 
         s.era.pause do
-          output2 = s.dump_metadata(:logical => true)
+          s.dump_metadata(:logical => true) {|path| output2 = File.read(path)}
         end
       end
     end
