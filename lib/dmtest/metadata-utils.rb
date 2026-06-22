@@ -16,7 +16,7 @@ module MetadataUtils
   # Reads the metadata from an _inactive_ pool
   def dump_metadata(dev, held_root = nil)
     metadata = nil
-    held_root_arg = held_root ? "-m #{held_root}" : ''
+    held_root_arg = held_root ? "--metadata-snap=#{held_root}" : ''
     Utils::with_temp_file('metadata_xml') do |file|
       ProcessControl::run("thin_dump #{held_root_arg} #{dev} > #{file.path}")
       file.rewind
@@ -33,7 +33,7 @@ module MetadataUtils
 
     status = PoolStatus.new(pool)
     Utils::with_temp_file('metadata_xml') do |file|
-      ProcessControl::run("thin_dump -m#{status.held_root} #{dev} > #{file.path}")
+      ProcessControl::run("thin_dump --metadata-snap=#{status.held_root} #{dev} > #{file.path}")
       file.rewind
       metadata = read_xml(file)
     end
