@@ -432,7 +432,7 @@ EOF
       sleep 5
 
       traces, _ = blktrace_complete(@metadata_dev, data_dev) do
-        ProcessControl.run("thin_trim --metadata-dev #{@metadata_dev} --data-dev #{data_dev} --pool-inactive")
+        ProcessControl.run("thin_trim --metadata-dev #{@metadata_dev} --data-dev #{data_dev}")
       end
 
       # Double check no discards went to the metadata device
